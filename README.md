@@ -21,9 +21,13 @@ A modern task management web application built with Flask, Bootstrap, and Neumor
 ⸻
 
 🛠️ Tech Stack
+
 	•	Backend: Flask (Python)
+ 
 	•	Database: SQLite (via SQLAlchemy)
+ 
 	•	Frontend: HTML5, Bootstrap 5, Custom CSS (Neumorphism design)
+ 
 	•	Icons/Styling: Bootstrap Icons + Emojis
 
 ⸻
@@ -55,15 +59,15 @@ Then open: http://127.0.0.1:5000/ in your browser.
 
 📂 Project Structure
 
-todo-app/
-│
-├── app.py              # Main Flask app
-├── models.py           # SQLAlchemy models
-├── requirements.txt    # Python dependencies
-├── static/
-│   └── style.css       # Custom CSS (neumorphism + dark mode)
-└── templates/
-    └── index.html      # Main frontend template
+	neo-todo-dashboard/
+	│
+	├── app.py              # Main Flask app
+	├── models.py           # SQLAlchemy models
+	├── requirements.txt    # Python dependencies
+	├── static/
+	│   └── style.css       # Custom CSS 
+	└── templates/
+	    └── index.html      # Main frontend template
 
 
 ⸻
@@ -83,6 +87,7 @@ Dark Mode
 ⸻
 
 🧑‍💻 Future Improvements
+
 	•	User authentication (login & signup)
 	•	Task deadlines & reminders
 	•	Progress dashboard with charts
