@@ -14,7 +14,6 @@ class Task(db.Model):
     priority = db.Column(db.String(20), default="Medium")  # Low, Medium, High
     completed = db.Column(db.Boolean, default=False)
 
-# Crée la base au premier lancement
 with app.app_context():
     db.create_all()
 
