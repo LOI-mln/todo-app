@@ -1,6 +1,7 @@
 📝 To-Do App
 
 A modern task management web application built with Flask, Bootstrap, and Neumorphism design, featuring:
+
 	•	✅ Add, categorize, and prioritize tasks
 	•	🎨 Light/Dark mode toggle
 	•	📂 Category filters (Work, Personal, Other)
@@ -11,6 +12,7 @@ A modern task management web application built with Flask, Bootstrap, and Neumor
 ⸻
 
 ⚡ Features
+
 	•	Add Tasks: Create tasks with title, category, and priority.
 	•	Filter by Category: Show only tasks from “Work”, “Personal”, or “Other”.
 	•	Dark Mode: Toggle between light and dark themes (saved in localStorage).
