@@ -27,8 +27,10 @@ def index():
 @app.route("/add", methods=["POST"])
 def add():
     title = request.form.get("title")
+    category = request.form.get("category")
+    priority = request.form.get("priority")
     if title:
-        new_task = Task(title=title)
+        new_task = Task(title=title, category=category, priority=priority)
         db.session.add(new_task)
         db.session.commit()
     return redirect("/")

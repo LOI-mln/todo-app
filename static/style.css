@@ -1,21 +1,58 @@
 body {
-    font-family: Arial, sans-serif;
-    max-width: 600px;
+    background: #e0e5ec;
+    font-family: 'Arial', sans-serif;
+    max-width: 700px;
     margin: 2rem auto;
     padding: 1rem;
 }
 
 h1 {
     text-align: center;
+    margin-bottom: 2rem;
+    color: #333;
+    text-shadow: 1px 1px 2px rgba(255,255,255,0.6);
 }
 
-ul {
-    list-style: none;
-    padding: 0;
+/* Formulaire */
+form .input-group {
+    background: #e0e5ec;
+    border-radius: 15px;
+    box-shadow: 8px 8px 15px #a3b1c6, -8px -8px 15px #ffffff;
+    padding: 10px;
+    margin-bottom: 1rem;
 }
 
-li {
+/* Boutons */
+.btn {
+    border-radius: 12px;
+    background: #e0e5ec;
+    box-shadow: 5px 5px 10px #a3b1c6, -5px -5px 10px #ffffff;
+    color: #333;
+    transition: all 0.2s ease;
+}
+
+.btn:hover {
+    box-shadow: inset 5px 5px 10px #a3b1c6, inset -5px -5px 10px #ffffff;
+}
+
+/* Liste des tâches */
+.list-group-item {
+    background: #e0e5ec;
+    border-radius: 12px;
+    box-shadow: 5px 5px 10px #a3b1c6, -5px -5px 10px #ffffff;
+    margin-bottom: 0.5rem;
     display: flex;
     justify-content: space-between;
-    margin: 0.5rem 0;
+    align-items: center;
+}
+
+.list-group-item span.badge {
+    border-radius: 10px;
+    padding: 5px 8px;
+    box-shadow: inset 2px 2px 5px #a3b1c6, inset -2px -2px 5px #ffffff;
+}
+
+.list-group-item.completed {
+    text-decoration: line-through;
+    opacity: 0.6;
 }

@@ -25,14 +25,23 @@
         	<button type="submit" class="btn btn-primary">Ajouter</button>
     	</div>
     </form>
-    <ul>
+    <ul class="list-group">
         {% for task in tasks %}
-            <li>
-                <span style="text-decoration: {% if task.completed %}line-through{% endif %};">
-                    {{ task.title }}
-                </span>
-                <a href="/toggle/{{ task.id }}">✔️</a>
-                <a href="/delete/{{ task.id }}">❌</a>
+            <li class="list-group-item {% if task.completed %}completed{% endif %}">
+               <div>
+            	  <strong>{{ task.title }}</strong>
+            	  {% if task.category %}<span class="badge bg-info text-dark">{{ task.category }}</span>{% endif %}
+            	  <span class="badge 
+                 	{% if task.priority == 'High' %}bg-danger
+                 	{% elif task.priority == 'Medium' %}bg-warning text-dark
+                 	{% else %}bg-secondary{% endif %}">
+                	{{ task.priority }}
+            	  </span>
+               </div>
+               <div>
+            		<a href="/toggle/{{ task.id }}" class="btn btn-sm">✔️</a>
+            		<a href="/delete/{{ task.id }}" class="btn btn-sm">❌</a>
+        	</div>
             </li>
         {% endfor %}
     </ul>
