@@ -10,6 +10,8 @@ db = SQLAlchemy(app)
 class Task(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(200), nullable=False)
+    category = db.Column(db.String(100), nullable=True)
+    priority = db.Column(db.String(20), default="Medium")  # Low, Medium, High
     completed = db.Column(db.Boolean, default=False)
 
 # Crée la base au premier lancement
