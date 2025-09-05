@@ -1,25 +1,51 @@
-/* General background */
+/* CSS Variables for Light & Dark mode */
+:root {
+    --bg-color: #e0e5ec;
+    --text-color: #333;
+    --card-bg: #e0e5ec;
+    --badge-bg: #ffffff;
+    --shadow-light: #ffffff;
+    --shadow-dark: #a3b1c6;
+}
+
+body.dark-mode {
+    --bg-color: #1e1e2f;
+    --text-color: #e0e5ec;
+    --card-bg: #2c2c3c;
+    --badge-bg: #3c3c4f;
+    --shadow-light: #2c2c3c;
+    --shadow-dark: #000000;
+}
+
+/* General body */
 body {
-    background: #e0e5ec;
+    background: var(--bg-color);
+    color: var(--text-color);
     font-family: 'Arial', sans-serif;
     max-width: 700px;
     margin: 2rem auto;
     padding: 1rem;
 }
 
-/* Title */
-h1 {
-    text-align: center;
-    margin-bottom: 2rem;
-    color: #333;
-    text-shadow: 1px 1px 2px rgba(255,255,255,0.6);
+/* Header wrapper for title and dark mode button */
+.header-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.header-wrapper h1 {
+    margin: 0;
+    font-size: 2rem;
+}
+.header-wrapper button {
+    margin: 0;
 }
 
-/* Form styling */
+/* Form */
 form .input-group {
-    background: #e0e5ec;
+    background: var(--card-bg);
     border-radius: 15px;
-    box-shadow: 8px 8px 15px #a3b1c6, -8px -8px 15px #ffffff;
+    box-shadow: 8px 8px 15px var(--shadow-dark), -8px -8px 15px var(--shadow-light);
     padding: 10px;
     margin-bottom: 1rem;
 }
@@ -27,22 +53,22 @@ form .input-group {
 /* Buttons */
 .btn {
     border-radius: 12px;
-    background: #e0e5ec;
-    box-shadow: 5px 5px 10px #a3b1c6, -5px -5px 10px #ffffff;
-    color: #333;
+    background: var(--card-bg);
+    box-shadow: 5px 5px 10px var(--shadow-dark), -5px -5px 10px var(--shadow-light);
+    color: var(--text-color);
     transition: all 0.2s ease;
     margin-left: 5px;
 }
 
 .btn:hover {
-    box-shadow: inset 5px 5px 10px #a3b1c6, inset -5px -5px 10px #ffffff;
+    box-shadow: inset 5px 5px 10px var(--shadow-dark), inset -5px -5px 10px var(--shadow-light);
 }
 
 /* Task list items */
 .list-group-item {
-    background: #e0e5ec;
+    background: var(--card-bg);
     border-radius: 12px;
-    box-shadow: 5px 5px 10px #a3b1c6, -5px -5px 10px #ffffff;
+    box-shadow: 5px 5px 10px var(--shadow-dark), -5px -5px 10px var(--shadow-light);
     margin-bottom: 0.5rem;
     display: flex;
     justify-content: space-between;
@@ -51,7 +77,6 @@ form .input-group {
 }
 
 .list-group-item.completed {
-    text-decoration: line-through;
     opacity: 0.6;
 }
 
@@ -68,7 +93,7 @@ form .input-group {
     color: #fff;
 }
 
-/* Category badges dark colors */
+/* Category badges */
 .bg-work {
     background-color: #2980b9 !important; /* dark blue */
     color: #fff;
@@ -82,10 +107,15 @@ form .input-group {
     color: #fff;
 }
 
-/* Generic badge neomorphism */
+/* Generic badge shadows */
 .list-group-item .badge {
     border-radius: 10px;
     padding: 5px 8px;
-    box-shadow: inset 2px 2px 5px #a3b1c6, inset -2px -2px 5px #ffffff;
+    box-shadow: inset 2px 2px 5px var(--shadow-dark), inset -2px -2px 5px var(--shadow-light);
     margin-left: 5px;
+}
+
+.list-group-item strong {
+    color: var(--text-color);
+    transition: color 0.2s ease;
 }
