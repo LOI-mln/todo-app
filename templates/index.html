@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>To-Do App</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <h1>Ma To-Do List</h1>
+    <form action="/add" method="POST">
+        <input type="text" name="title" placeholder="Nouvelle tâche" required>
+        <button type="submit">Ajouter</button>
+    </form>
+    <ul>
+        {% for task in tasks %}
+            <li>
+                <span style="text-decoration: {% if task.completed %}line-through{% endif %};">
+                    {{ task.title }}
+                </span>
+                <a href="/toggle/{{ task.id }}">✔️</a>
+                <a href="/delete/{{ task.id }}">❌</a>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
