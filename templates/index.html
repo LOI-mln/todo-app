@@ -2,40 +2,71 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Neo To-Do App</title>
+    <title>Neo To-Do Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-    <div class="header-wrapper mb-3">
-        <h1>To-Do List</h1>
+    <!-- Header -->
+    <div class="header-wrapper mb-4">
+        <h1>My Neo To-Do Dashboard</h1>
         <button id="darkModeToggle" class="btn btn-sm btn-primary">🌙 Dark Mode</button>
     </div>
 
-    <form action="/add" method="POST" class="mb-3">
-        <div class="input-group">
-            <input type="text" name="title" class="form-control" placeholder="New Task" required>
-            <select name="category" class="form-select">
-                <option value="">No Category</option>
-                <option value="Work">Work</option>
-                <option value="Personal">Personal</option>
-                <option value="Other">Other</option>
-            </select>
-            <select name="priority" class="form-select">
-                <option value="Low">Low</option>
-                <option value="Medium" selected>Medium</option>
-                <option value="High">High</option>
-            </select>
-            <button type="submit" class="btn btn-primary">Add</button>
-        </div>
-    </form>
+    <!-- Add Task Button -->
+    <div class="add-task-wrapper mb-3">
+        <button class="btn btn-lg btn-primary" data-bs-toggle="modal" data-bs-target="#addTaskModal">
+            ➕ Add New Task
+        </button>
+    </div>
 
-    <ul class="list-group">
+    <!-- Add Task Modal -->
+    <div class="modal fade" id="addTaskModal" tabindex="-1" aria-labelledby="addTaskModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <form action="/add" method="POST">
+            <div class="modal-header">
+              <h5 class="modal-title" id="addTaskModalLabel">Add New Task</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <input type="text" name="title" class="form-control mb-2" placeholder="Task Title" required>
+              <select name="category" class="form-select mb-2">
+                  <option value="">No Category</option>
+                  <option value="Work">Work</option>
+                  <option value="Personal">Personal</option>
+                  <option value="Other">Other</option>
+              </select>
+              <select name="priority" class="form-select">
+                  <option value="Low">Low</option>
+                  <option value="Medium" selected>Medium</option>
+                  <option value="High">High</option>
+              </select>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary">Add Task</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Category Buttons -->
+    <div class="categories-wrapper mb-3">
+        <button class="btn btn-category" data-category="All">All</button>
+        <button class="btn btn-category" data-category="Work">Work</button>
+        <button class="btn btn-category" data-category="Personal">Personal</button>
+        <button class="btn btn-category" data-category="Other">Other</button>
+    </div>
+
+    <!-- Pending Tasks -->
+    <h3>Pending Tasks</h3>
+    <ul class="list-group" id="pending-tasks">
         {% for task in tasks %}
-        <li class="list-group-item {% if task.completed %}completed{% endif %}">
+        {% if not task.completed %}
+        <li class="list-group-item task-item" data-category="{{ task.category }}">
             <div>
                 <strong>{{ task.title }}</strong>
-
                 {% if task.category %}
                 <span class="badge
                     {% if task.category == 'Work' %}bg-work
@@ -44,19 +75,46 @@
                     {{ task.category }}
                 </span>
                 {% endif %}
-
                 <span class="badge priority 
-                     {% if task.priority == 'High' %}high
-                     {% elif task.priority == 'Medium' %}medium
-                     {% else %}low{% endif %}">
+                    {% if task.priority == 'High' %}high
+                    {% elif task.priority == 'Medium' %}medium
+                    {% else %}low{% endif %}">
                     {{ task.priority }}
                 </span>
             </div>
             <div>
-                <a href="/toggle/{{ task.id }}" class="btn btn-sm">✔️</a>
-                <a href="/delete/{{ task.id }}" class="btn btn-sm">❌</a>
+                <a href="/toggle/{{ task.id }}" class="btn btn-sm complete-btn">✔️</a>
             </div>
         </li>
+        {% endif %}
+        {% endfor %}
+    </ul>
+
+    <!-- Completed Tasks -->
+    <h3 class="mt-4">Completed Tasks</h3>
+    <ul class="list-group" id="completed-tasks">
+        {% for task in tasks %}
+        {% if task.completed %}
+        <li class="list-group-item task-item completed">
+            <div>
+                <strong>{{ task.title }}</strong>
+                {% if task.category %}
+                <span class="badge
+                    {% if task.category == 'Work' %}bg-work
+                    {% elif task.category == 'Personal' %}bg-personal
+                    {% else %}bg-other{% endif %}">
+                    {{ task.category }}
+                </span>
+                {% endif %}
+                <span class="badge priority 
+                    {% if task.priority == 'High' %}high
+                    {% elif task.priority == 'Medium' %}medium
+                    {% else %}low{% endif %}">
+                    {{ task.priority }}
+                </span>
+            </div>
+        </li>
+        {% endif %}
         {% endfor %}
     </ul>
 
@@ -73,13 +131,11 @@
             }
         }
 
-        // Load saved mode
         if(localStorage.getItem('darkMode') === 'enabled') {
             body.classList.add('dark-mode');
         }
         updateButtonText();
 
-        // Toggle on click
         toggleBtn.addEventListener('click', () => {
             body.classList.toggle('dark-mode');
             if(body.classList.contains('dark-mode')) {
@@ -88,6 +144,23 @@
                 localStorage.setItem('darkMode', 'disabled');
             }
             updateButtonText();
+        });
+
+        // Category filter
+        const categoryButtons = document.querySelectorAll('.btn-category');
+        const taskItems = document.querySelectorAll('#pending-tasks .task-item');
+
+        categoryButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const category = btn.dataset.category;
+                taskItems.forEach(task => {
+                    if(category === "All" || task.dataset.category === category) {
+                        task.style.display = 'flex';
+                    } else {
+                        task.style.display = 'none';
+                    }
+                });
+            });
         });
     </script>
 </body>
